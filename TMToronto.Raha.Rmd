@@ -1,0 +1,33 @@
+---
+title: "TM Toronto Raha"
+author: "Taavi Kivisik"
+date: "13. november 2015"
+output: html_document
+---
+
+See on **Madli** ja **Taavi** Toronto *tulude* ja *kulude* dokument.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+setwd("~/Documents/Programming/R Data/Toronto eelarve")
+andmed <- read.csv("Madli ja Taavi rahaplaanid - Torontsik.csv",sep =",")
+```
+
+# Esimene pilk andmetele
+Kokku on kulutatud `r sum(andmed$raha, na.rm=TRUE)`, millest Taavi on kulutanud `r andmed %>% filter(kulutaja == "T") %>% select(raha) %>% sum()` ja Madli `r andmed %>% filter(kulutaja == "M") %>% select(raha) %>% sum(na.rm=TRUE)`.
+
+```{r}
+str(andmed)
+summary(andmed)
+```
+
+# Andmete visualiseerimine
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+```
+
+```{r}
+joonis <- ggplot(andmed, aes(kulutaja, raha))
+joonis + geom_point()
+```
+
